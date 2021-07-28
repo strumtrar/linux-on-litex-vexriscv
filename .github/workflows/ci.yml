@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Install Tools
         run: |
@@ -21,9 +23,18 @@ jobs:
           apt-get -qy install wget build-essential python3 python3-pip libevent-dev libjson-c-dev \
             device-tree-compiler python3-requests python3-pexpect
 
+      - name: Install sbt
+        run: |
+          apt-get -qy install default-jdk
+          echo "deb https://repo.scala-sbt.org/scalasbt/debian all main" | tee /etc/apt/sources.list.d/sbt.list
+          echo "deb https://repo.scala-sbt.org/scalasbt/debian /" | tee /etc/apt/sources.list.d/sbt_old.list
+          curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | apt-key add
+          apt-get -qy update
+          apt-get -qy install sbt
+
       - name: Install Toolchain
         run: |
-          apt-get install gcc-riscv64-linux-gnu g++-riscv64-linux-gnu
+          apt-get -qy install gcc-riscv64-linux-gnu g++-riscv64-linux-gnu
 
       - name: Install Migen / LiteX
         run: |
