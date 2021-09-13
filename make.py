@@ -405,6 +405,7 @@ class ECPIX5(Board):
     soc_kwargs = {
         "sys_clk_freq" : int(50e6),
         "l2_size"      : 2048, # Use Wishbone and L2 for memory accesses.
+        "uart_baudrate": 115.2e3, # Slow down baudrate
     }
     def __init__(self):
         from litex_boards.targets import ecpix5
