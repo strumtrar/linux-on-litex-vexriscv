@@ -42,16 +42,19 @@ This project demonstrates **how high level HDLs (Spinal HDL, Migen) enable new p
 | miniSpartan6 | Xilinx Spartan6     | XC6SLX25      |     80MHz     | 16-bits  32MB SDR  |   8MB QSPI*   |         No         |   Yes  |
 | Pipistrello  | Xilinx Spartan6     | XC6SLX45      |     83MHz     | 16-bits  64MB LPDDR|  16MB QSPI*   |         No         |   Yes* |
 | XCU1525      | Xilinx Ultrascale+  | XCVU9P        |    125MHz     | 64-bits  4GB DDR4  |      No       |         No         |   No   |
+| AlveoU280    | Xilinx Ultrascale+  | XCU280-ES1    |    250MHz     | 64-bits 2x16GB DDR4* <BR> 1024-bits 2x4GB HBM2 | No | No |  No   |
 | Versa ECP5   | Lattice ECP5        | LFE5UM5G 45F  |     75MHz     | 16-bits 128MB DDR3 |  16MB QSPI*   |   1Gbps RGMII      |   No   |
 | HADBadge     | Lattice ECP5        | LFE5U-45F     |     48MHz     |  8-bits  32MB SDR  |  16MB QSPI*   |         No         |   No   |
 | ULX3S        | Lattice ECP5        | LFE5U 45F     |     50MHz     | 16-bits  32MB SDR  |   4MB QSPI*   |         No         |   Yes  |
 | OrangeCrab   | Lattice ECP5        | LFE5U 25F     |     48MHz     | 16-bits 128MB SDR  |   4MB QSPI*   |         No         |   Yes  |
+| ButterStick  | Lattice ECP5        | LFE5UM5G 85F  |     60MHz     | 16-bits  1GB DDR3  |   4MB QSPI*   |         Yes        |   Yes* |
 | CamLink 4K   | Lattice ECP5        | LFE5U 25F     |     81MHz     | 16-bits 128MB SDR  |      No       |         No         |   No   |
 | TrellisBoard | Lattice ECP5        | LFE5UM5G 85F  |     75MHz     | 32-bits   1GB DDR3 |   16MB QSPI*  |   1Gbps RGMII*     |   Yes  |
 | ECPIX-5      | Lattice ECP5        | LFE5UM5G 85F  |     50MHz     | 16-bits 512MB DDR3 |   16MB QSPI   |   1Gbps RGMII      |   Yes  |
 | De0Nano      | Intel Cyclone4      | EP4CE22F      |     50MHz     | 16-bits  32MB SDR  |      No       |         No         |   No   |
 | De10Lite     | Intel MAX10         | 10M50DA       |     50MHz     | 16-bits  64MB SDR  |      No       |         No         |   No   |
 | De10Nano     | Intel Cyclone5      | 5CSEBA6U23I7  |     50MHz     | 16-bits  32MB SDR  |      No       |         No         |   Yes  |
+| De1-SoC      | Intel Cyclone5      | 5CSEMA5F31    |     50MHz     | 16-bits  64MB SDR  |      No       |         No         |   No   |
 | Avalanche    | Microsemi PolarFire | MPF300TS      |    100MHz     | 16-bits 256MB DDR3 |   8MB QSPI*   |   1Gbps RGMII*     |   No   |
 | QM T EP4CE15 | Intel Cyclone4      | EP4CE15F      |     50MHz     | 16-bits  32MB SDR  |      No       |         No         |   No   |
 
