@@ -27,13 +27,20 @@ jobs:
       # Install RISC-V GCC
       - name: Install RISC-V GCC
         run: |
-          wget https://raw.githubusercontent.com/enjoy-digital/litex/master/litex_setup.py
           python3 litex_setup.py gcc
-          sudo mkdir /usr/local/riscv
-          sudo cp -r $PWD/../riscv64-*/* /usr/local/riscv
 
       # Test
-      - name: Run Tests
+      - name: Build SoC
         run: |
-          export PATH=/usr/local/riscv/bin:$PATH
-          python3 -m unittest test.test_build
+          export PATH=$PATH:~/.local/bin
+          export PATH=$PATH:$(realpath ../riscv64-*/bin)
+          git clean -dfx
+          ./make.py --board=${{ matrix.board }} ${{ matrix.args }}
+          git status
+
+      # Upload
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.board }}
+          path: build/*/gateware
