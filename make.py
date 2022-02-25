@@ -366,6 +366,19 @@ class MNT_RKX7(Board):
             "spisdcard",
         }, bitstream_ext=".bit")
 
+# STLV7325 -----------------------------------------------------------------------------------------
+
+class STLV7325(Board):
+    soc_kwargs = {"uart_baudrate": 115200}
+    def __init__(self):
+        from litex_boards.targets import stlv7325
+        Board.__init__(self, stlv7325.BaseSoC, soc_capabilities={
+            # Communication
+            "serial",
+            # Storage
+            "sdcard",
+        }, bitstream_ext=".bit")
+
 #---------------------------------------------------------------------------------------------------
 # Lattice Boards
 #---------------------------------------------------------------------------------------------------
@@ -636,12 +649,17 @@ class TrionT120BGA576DevKit(Board):
 
 
 class TitaniumTi60F225DevKit(Board):
-    soc_kwargs = {"with_hyperram" : True}
+    soc_kwargs = {
+        "with_hyperram" : True,
+        "sys_clk_freq"  : 300e6,
+    }
     def __init__(self):
         from litex_boards.targets import titanium_ti60_f225_dev_kit
         Board.__init__(self, titanium_ti60_f225_dev_kit.BaseSoC, soc_capabilities={
             # Communication
             "serial",
+            # Storage
+            "sdcard",
             # GPIOs
              "leds",
         }, bitstream_ext=".bit")
@@ -674,6 +692,7 @@ supported_boards = {
     "qmtech_wukong":    Qmtech_WuKong,
     "sds1104xe":        SDS1104XE,
     "mnt_rkx7":         MNT_RKX7,
+    "stlv7325":         STLV7325,
 
     # Lattice
     "versa_ecp5":      VersaECP5,
