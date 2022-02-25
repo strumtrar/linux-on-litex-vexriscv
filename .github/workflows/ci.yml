@@ -22,6 +22,7 @@ jobs:
         run: |
           apt-get -qy update
           apt-get -qy install wget build-essential python3 verilator libevent-dev libjson-c-dev device-tree-compiler
+          apt-get -qy install python3-pip
           pip3 install setuptools
           pip3 install requests
           pip3 install pexpect
