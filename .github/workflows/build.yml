@@ -1,0 +1,72 @@
+name: "Build Litex"
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/hdl/debian-buster/impl:latest
+    steps:
+      # Checkout Repository
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Install Tools
+      - name: Install Tools
+        run: |
+          echo $PATH
+          apt-get -qy update
+          apt-get -qy install apt-transport-https curl gnupg
+          echo "deb https://repo.scala-sbt.org/scalasbt/debian all main" | tee /etc/apt/sources.list.d/sbt.list
+          echo "deb https://repo.scala-sbt.org/scalasbt/debian /" | tee /etc/apt/sources.list.d/sbt_old.list
+          curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | gpg --no-default-keyring --keyring gnupg-ring:/etc/apt/trusted.gpg.d/scalasbt-release.gpg --import
+          chmod 644 /etc/apt/trusted.gpg.d/scalasbt-release.gpg
+          # java needs this folder
+          mkdir -p /usr/share/man/man1
+          apt-get -qy update
+          apt-get -qy install default-jre default-jdk
+          apt-get -qy install sbt
+          apt-get -qy install wget build-essential python3 verilator libevent-dev libjson-c-dev device-tree-compiler
+          apt-get -qy install python3-pip git yosys
+          pip3 install setuptools
+          pip3 install requests
+          pip3 install pexpect
+          pip3 install meson
+          pip3 install ninja
+
+      - name: Get LiteX
+        run: |
+          git clone https://github.com/enjoy-digital/litex
+          cd litex
+          echo "LITEX_SHA=$(git rev-parse HEAD)" >> $GITHUB_ENV
+
+      # - name: Cache LiteX installation
+      #   uses: actions/cache@v2
+      #   id: cache-litex
+      #   with:
+      #     path: .litex
+      #     key: cache-litex-${{ env.LITEX_SHA }}
+
+      # Install (n)Migen / LiteX / Cores
+      - name: Install LiteX and RISC-V GCC
+        run: |
+          cd litex
+          python3 litex_setup.py init install --user
+          python3 litex_setup.py gcc
+#        if: steps.cache-litex.outputs.cache-hit != 'true'
+
+      # Test
+      - name: Build SoC
+        run: |
+          export PATH=$PATH:$(realpath riscv64-*/bin)
+          export PATH=$PATH:~/.local/bin
+          ./make.py --board=ecpix5 --build
+          git status
+
+      # Upload
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ecpix5
+          path: build/*/gateware
