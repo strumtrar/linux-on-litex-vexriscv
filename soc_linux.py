@@ -1,10 +1,8 @@
 #
 # This file is part of Linux-on-LiteX-VexRiscv
 #
-# Copyright (c) 2019-2021, Linux-on-LiteX-VexRiscv Developers
+# Copyright (c) 2019-2022, Linux-on-LiteX-VexRiscv Developers
 # SPDX-License-Identifier: BSD-2-Clause
-
-#!/usr/bin/env python3
 
 import os
 import json
@@ -30,36 +28,13 @@ from litex.tools.litex_json2dts_linux import generate_dts
 
 def SoCLinux(soc_cls, **kwargs):
     class _SoCLinux(soc_cls):
-        csr_map = {**soc_cls.csr_map, **{
-            "ctrl":       0,
-            "uart":       2,
-            "timer0":     3,
-        }}
-        interrupt_map = {**soc_cls.interrupt_map, **{
-            "uart":       0,
-            "timer0":     1,
-        }}
-        mem_map = {**soc_cls.mem_map, **{
-            "ethmac":  0xb0000000, # len: 0x2000
-            "csr":     0xf0000000,
-        }}
-
-        def __init__(self, cpu_variant="linux", uart_baudrate=1e6, **kwargs):
+        def __init__(self, **kwargs):
 
             # SoC ----------------------------------------------------------------------------------
             soc_cls.__init__(self,
                 cpu_type       = "vexriscv_smp",
-                cpu_variant    = cpu_variant,
-                uart_baudrate  = uart_baudrate,
-                max_sdram_size = 0x40000000, # Limit mapped SDRAM to 1GB.
+                cpu_variant    = "linux",
                 **kwargs)
-
-            # Add linker region for OpenSBI
-            self.add_memory_region("opensbi", self.mem_map["main_ram"] + 0x00f00000, 0x80000, type="cached+linker")
-
-        # Leds -------------------------------------------------------------------------------------
-        def add_leds(self):
-            self.submodules.leds = GPIOOut(Cat(self.platform.request_all("user_led")))
 
         # RGB Led ----------------------------------------------------------------------------------
         def add_rgb_led(self):
