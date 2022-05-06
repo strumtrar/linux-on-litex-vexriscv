@@ -469,7 +469,6 @@ class TrellisBoard(Board):
 # ECPIX5 support -----------------------------------------------------------------------------------
 
 class ECPIX5(Board):
-    spiflash = IS25LP256D(Codes.READ_1_1_1)
     soc_kwargs = {
         "sys_clk_freq" : int(50e6),
         "l2_size"      : 2048, # Use Wishbone and L2 for memory accesses.
