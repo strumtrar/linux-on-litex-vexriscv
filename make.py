@@ -268,8 +268,8 @@ class Pipistrello(Board):
 
 class XCU1525(Board):
     def __init__(self):
-        from litex_boards.targets import xilinx_xcu1525
-        Board.__init__(self, xilinx_xcu1525.BaseSoC, soc_capabilities={
+        from litex_boards.targets import sqrl_xcu1525
+        Board.__init__(self, sqrl_xcu1525.BaseSoC, soc_capabilities={
             # Communication
             "serial",
             # Storage
@@ -763,11 +763,11 @@ def main():
 
         # SoC peripherals --------------------------------------------------------------------------
         if board_name in ["arty", "arty_a7"]:
-            from litex_boards.platforms.arty import _sdcard_pmod_io
+            from litex_boards.platforms.digilent_arty import _sdcard_pmod_io
             board.platform.add_extension(_sdcard_pmod_io)
 
         if board_name in ["orangecrab"]:
-            from litex_boards.platforms.orangecrab import feather_i2c
+            from litex_boards.platforms.gsd_orangecrab import feather_i2c
             board.platform.add_extension(feather_i2c)
 
         if "mmcm" in board.soc_capabilities:
