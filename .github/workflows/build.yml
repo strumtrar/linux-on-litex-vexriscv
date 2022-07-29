@@ -37,7 +37,7 @@ jobs:
 
       - name: Get LiteX
         run: |
-          git clone https://github.com/enjoy-digital/litex
+          git clone -b 2022.04 https://github.com/enjoy-digital/litex
           cd litex
           echo "LITEX_SHA=$(git rev-parse HEAD)" >> $GITHUB_ENV
 
