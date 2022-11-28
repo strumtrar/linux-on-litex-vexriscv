@@ -63,6 +63,14 @@ jobs:
           export PATH=$PATH:~/.local/bin
           ./make.py --board=ecpix5 --build
           git status
+      
+      # Build Linux binaries
+      - name: Build Linux
+        run: |
+          git clone http://github.com/buildroot/buildroot
+          cd buildroot
+          make BR2_EXTERNAL=../buildroot/ litex_vexriscv_defconfig
+          make
 
       # Upload
       - name: Upload Artifact
